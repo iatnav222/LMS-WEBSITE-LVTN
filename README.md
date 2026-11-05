@@ -1,84 +1,68 @@
-# LMS Website - Đồ Án Khóa Luận Tốt Nghiệp
+# LMS Website — Đồ án khóa luận tốt nghiệp
 
-## Thông tin sinh viên
-- Tên sinh viên: Trần Văn Tài
-- MSSV: DH52201396
-- Lớp: D22-TH05
+Hệ thống quản lý học tập trực tuyến (Learning Management System — LMS), định hướng xây dựng nền tảng học tập theo mô hình marketplace: học viên tham gia khóa học, giảng viên biên soạn nội dung và quản trị viên kiểm duyệt, vận hành hệ thống.
 
-## Tên đề tài
-LMS Website
+> **Trạng thái hiện tại:** Repository đang lưu tài liệu phân tích yêu cầu, ghi chú chức năng và thiết kế cơ sở dữ liệu. Mã nguồn ứng dụng chưa được đưa vào repository; hướng công nghệ dự kiến được mô tả trong tài liệu là Laravel (PHP) và MySQL.
 
-## Mô tả dự án
-Dự án này là một hệ thống quản lý học tập trực tuyến (Learning Management System - LMS) được xây dựng nhằm hỗ trợ việc quản lý khóa học, người dùng, tài liệu học tập và quá trình học tập trực tuyến.
+## Mục tiêu
 
-Hệ thống này có thể phục vụ cho các mục tiêu như:
-- Quản lý người học và giảng viên
-- Tạo và quản lý khóa học
-- Phân quyền truy cập theo vai trò
-- Theo dõi tiến độ học tập
-- Cung cấp tài liệu và bài tập trực tuyến
+- Mô hình hóa các nghiệp vụ chính của một nền tảng học trực tuyến.
+- Thiết kế cơ sở dữ liệu phục vụ người dùng, khóa học, bài học, tiến độ, kiểm tra và giao dịch.
+- Làm cơ sở cho các bước triển khai, kiểm thử và hoàn thiện đồ án.
 
-## Mục tiêu của đề tài
-- Xây dựng giao diện website hiện đại, dễ sử dụng
-- Tạo nền tảng học trực tuyến hiệu quả cho người dùng
-- Tối ưu trải nghiệm người học và quản trị viên
-- Áp dụng các công nghệ web hiện đại để phát triển hệ thống LMS
+## Vai trò và phạm vi chức năng
 
-## Công nghệ có thể sử dụng
-Dự án có thể được phát triển bằng các công nghệ web phổ biến như:
-- Frontend: HTML, CSS, JavaScript hoặc framework như React
-- Backend: Node.js, Express.js, hoặc ASP.NET
-- Database: MySQL, PostgreSQL, MongoDB
-- Authentication: JWT / Session
-- Deployment: Vercel, Netlify, hoặc VPS
+- **Học viên:** khám phá khóa học, ghi danh, học video/bài đọc, lưu tiến độ và ghi chú, làm quiz, thảo luận, đánh giá và nhận chứng chỉ.
+- **Giảng viên:** quản lý hồ sơ, xây dựng chương/bài học và quiz, gửi khóa học để duyệt, theo dõi học viên/doanh thu và yêu cầu rút tiền.
+- **Quản trị viên:** quản lý người dùng và danh mục, kiểm duyệt khóa học, theo dõi đơn hàng, xử lý yêu cầu rút tiền và xem báo cáo tổng quan.
 
-## Cấu trúc dự án
+Các chức năng được phân rã thành 5 phân hệ: người dùng; khám phá và thương mại; biên soạn khóa học; học tập và tương tác; báo cáo và tài chính. Đây là phạm vi thiết kế, không khẳng định các tính năng đã được triển khai trong ứng dụng.
+
+## Công nghệ định hướng
+
+- **Backend:** Laravel / PHP 8.2 trở lên
+- **Cơ sở dữ liệu:** MySQL 8.0 trở lên hoặc MariaDB 10.5 trở lên
+- **Storage engine và mã hóa:** InnoDB, `utf8mb4`
+- **Thanh toán dự kiến:** VNPAY (một số tài liệu có đề cập các cổng khác)
+
+## Tài liệu trong repository
+
+- [Đặc tả yêu cầu tính năng hệ thống LMS](DAC_TA_YEU_CAU_TINH_NANG_HE_THONG_LMS.md) — phân hệ, chức năng, yêu cầu phi chức năng và ma trận truy vết.
+- [Ghi chú chức năng hệ thống LMS](GHI_CHU_TINH_NANG_HE_THONG_LMS.md) — ghi chú tham khảo và ý tưởng tính năng cho học viên, giảng viên, quản trị viên.
+- [Thiết kế cơ sở dữ liệu LMS](database/THIET_KE_CO_SO_DU_LIEU_LMS.md) — thuyết minh thiết kế dữ liệu.
+- [Database schema SQL](database/database_schema.sql) — script tạo cấu trúc cơ sở dữ liệu.
+
+Schema hiện mô hình hóa các nhóm dữ liệu như người dùng và hồ sơ giảng viên, danh mục/khóa học/chương/bài học, quiz, ghi danh và tiến độ, ghi chú/chứng chỉ, đơn hàng/mã giảm giá/yêu cầu rút tiền, đánh giá và bình luận.
+
+## Khởi tạo cơ sở dữ liệu thiết kế
+
+Yêu cầu MySQL 8.0+ hoặc MariaDB 10.5+. Tạo một database phát triển trống, ví dụ `lms_website`, sau đó nạp schema:
+
 ```bash
-LMS-WEBSITE-LVTN/
+mysql -u <username> -p -e "CREATE DATABASE lms_website CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+mysql -u <username> -p lms_website < database/database_schema.sql
+```
+
+> **Cảnh báo:** `database/database_schema.sql` có các lệnh `DROP TABLE IF EXISTS` để dựng lại schema. Chỉ chạy trên database thử nghiệm/phát triển phù hợp; không chạy trên database có dữ liệu cần giữ hoặc môi trường production.
+
+## Cấu trúc hiện tại
+
+```text
+.
 ├── README.md
-├── src/
-├── public/
-├── package.json
-├── .gitignore
-└── ...
+├── DAC_TA_YEU_CAU_TINH_NANG_HE_THONG_LMS.md
+├── GHI_CHU_TINH_NANG_HE_THONG_LMS.md
+└── database/
+    ├── THIET_KE_CO_SO_DU_LIEU_LMS.md
+    └── database_schema.sql
 ```
-
-## Hướng dẫn cài đặt
-### 1. Clone repository
-```bash
-git clone https://github.com/iatnav222/LMS-WEBSITE-LVTN.git
-cd LMS-WEBSITE-LVTN
-```
-
-### 2. Cài đặt dependencies
-```bash
-npm install
-```
-
-### 3. Chạy ứng dụng
-```bash
-npm run dev
-```
-
-### 4. Mở trình duyệt
-Truy cập địa chỉ:
-```bash
-http://localhost:3000
-```
-
-## Tính năng dự kiến
-- Đăng nhập / đăng ký tài khoản
-- Quản lý khóa học
-- Upload tài liệu
-- Bài kiểm tra và đánh giá
-- Theo dõi tiến độ học tập
-- Quản trị hệ thống
-
-## Ghi chú
-Dự án này đang trong quá trình phát triển và có thể được cập nhật liên tục để hoàn thiện hơn theo mục tiêu của khóa luận tốt nghiệp.
 
 ## Tác giả
-Trần Văn Tài
 
-## Liên hệ
-Nếu cần hỗ trợ hoặc trao đổi về dự án, vui lòng liên hệ qua email hoặc GitHub cá nhân.
+- **Sinh viên:** Trần Văn Tài
+- **MSSV:** DH52201396
+- **Lớp:** D22-TH05
+
+---
+
+*Tài liệu và thiết kế sẽ được cập nhật theo tiến độ thực hiện đồ án.*
